@@ -12,4 +12,6 @@ type Content struct {
 	Text        string           `json:"text" bson:"Text"`
 	Link        string           `json:"link" bson:"Link"`
 	Tags        []string         `json:"tags" bson:"Tags"`
+	LikeCount   int              `json:"likeCount" bson:"LikeCount"`
+	ImageUrl    string           `json:"imageUrl" bson:"ImageUrl"`
 }
