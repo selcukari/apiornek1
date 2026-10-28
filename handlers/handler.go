@@ -7,6 +7,7 @@ import (
 	"strings"
 	"web-api/config"
 	"web-api/models"
+	"web-api/pkg"
 
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
@@ -22,7 +23,7 @@ func GetAllContents(w http.ResponseWriter, r *http.Request) {
 	}
 	defer client.Disconnect(context.Background())
 
-	collection := client.Database("newsPopulerDb").Collection("Contents")
+	collection := client.Database(pkg.GetMongoDBDatabaseName()).Collection("Contents")
 	cursor, err := collection.Find(context.Background(), bson.D{})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -76,7 +77,7 @@ func GetContentID(w http.ResponseWriter, r *http.Request) {
 		Data:    uuidValue[:],
 	}
 
-	collection := client.Database("newsPopulerDb").Collection("Contents")
+	collection := client.Database(pkg.GetMongoDBDatabaseName()).Collection("Contents")
 	var content models.Content
 	if err := collection.FindOne(context.Background(), bson.M{"_id": uuidBinary}).Decode(&content); err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
