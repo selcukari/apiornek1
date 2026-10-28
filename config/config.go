@@ -2,13 +2,15 @@ package config
 
 import (
 	"context"
+	"web-api/pkg"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func ConnectToMongoDB() (*mongo.Client, error) {
-	uri := "mongodb://localhost:27017/?connect=direct"
+
+	uri := pkg.GetMongoDBURI()
 
 	clientOptions := options.Client().ApplyURI(uri)
 	client, err := mongo.Connect(context.Background(), clientOptions)
